@@ -54,19 +54,18 @@ class AenetPredictParser(Parser):
                 if not energy_evaluation and 'Energy evaluation' in line:
                     energy_evaluation = True
 
-                if energy_evaluation:
+                if not energy_evaluation:
+                    continue
 
-                    if 'Number of atoms' in line:
+                if 'Number of atoms' in line:
+                    natoms.append(int(line.replace(' Number of atoms   :', '')))
 
-                        natoms.append(
-                            int(line.replace(' Number of atoms   :', '')))
+                if f" Total energy {13 * ' '} :" in line:
+                    m = re.findall(r'[-+]?\d*\.\d+|\d+', line)
+                    energies.append(float(m[0]))
 
-                    if f" Total energy {13 * ' '} :" in line:
-
-                        m = re.findall(r'[-+]?\d*\.\d+|\d+', line)
-                        energies.append(float(m[0]))
-
-                    if 'Atomic Energy Network done.' in line: break
+                if 'Atomic Energy Network done.' in line:
+                    break
 
         pk_dict = {
             str(pk): {
