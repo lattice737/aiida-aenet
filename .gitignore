@@ -163,3 +163,4 @@ aiida_aenet/calculations/cur.py
 aiida_aenet/calculations/transform.py
 setup.json
 aiida_aenet/utils
+aiida_aenet/workflows/active_learn_potential.py
